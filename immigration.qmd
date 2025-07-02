@@ -18,4 +18,49 @@ $$
 g(\mathbb{E}[Y \mid \mathbf{X}]) = \beta_0 + \beta_1 X_1 + \beta_2 X_2 + \cdots + \beta_p X_p
 $$
 
-Immigration is a highly contentious topic in American politics and is a key issue for many polititians. Using data from Enos which examines Boston commuters, some of whom were exposed to Spanish speakers on a train platform, we will attempt to answer the question "What is the average causal effect of exposure to Spanish-speakers on attitudes toward immigration?" One potential weakness in this approach is that the assumption of representativeness may not hold.
+$$
+\widehat{\text{att\_end}} = 75.2 + 4.8 \cdot \text{treatment}
+$$
+
+```{r}
+#| cache: true
+fit_att <- linear_reg(engine = "lm") |> 
+  fit(att_end ~ treatment, data = trains)
+```
+
+```{r}
+library(gt)
+
+# Tidy model output with confidence intervals
+fit_att_tidy <- tidy(fit_att, conf.int = TRUE)
+
+# Create a nice table using gt
+fit_att_tidy |> 
+  mutate(term = recode(term,
+                       "(Intercept)" = "Intercept",
+                       "treatment" = "Treatment")) |> 
+  gt() |> 
+  tab_header(
+    title = "Linear Regression Coefficients",
+    subtitle = "Model: att_end ~ treatment"
+  ) |> 
+  fmt_number(
+    columns = where(is.numeric),
+    decimals = 2
+  ) |> 
+  cols_label(
+    term = "Term",
+    estimate = "Estimate",
+    std.error = "Std. Error",
+    statistic = "t value",
+    p.value = "p-value",
+    conf.low = "95% CI (Low)",
+    conf.high = "95% CI (High)"
+  ) |> 
+  tab_style(
+    style = cell_text(weight = "bold"),
+    locations = cells_column_labels(everything())
+  )
+```
+
+Immigration is a highly contentious topic in American politics and is a key issue for many polititians. Using data from Enos which examines Boston commuters, some of whom were exposed to Spanish speakers on a train platform, we will attempt to answer the question "What is the average causal effect of exposure to Spanish-speakers on attitudes toward immigration?" One potential weakness in this approach is that the assumption of representativeness may not hold. I model the relationship between exposure to Spanish speakers and attitude towrds immigration, an integer between 3 and 15, with a linear model.
