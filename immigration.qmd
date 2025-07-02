@@ -10,6 +10,12 @@ execute:
 #| message: false
 library(tidyverse) 
 library(primer.data)
+library(tidymodels)
+library(broom)
 ```
 
-Immigration is a highly contentious topic in American politics and is a key issue for many polititians. Using data from Enos which examines Boston commuters, some of whom were exposed to Spanish speakers on a train platform, we will attempt to answer the question "What is the average causal effect of exposure to Spanish-speakers on attitudes toward immigration?"
+$$
+g(\mathbb{E}[Y \mid \mathbf{X}]) = \beta_0 + \beta_1 X_1 + \beta_2 X_2 + \cdots + \beta_p X_p
+$$
+
+Immigration is a highly contentious topic in American politics and is a key issue for many polititians. Using data from Enos which examines Boston commuters, some of whom were exposed to Spanish speakers on a train platform, we will attempt to answer the question "What is the average causal effect of exposure to Spanish-speakers on attitudes toward immigration?" One potential weakness in this approach is that the assumption of representativeness may not hold.

@@ -36,6 +36,35 @@ ul.task-list li input[type="checkbox"] {
 <link href="immigration_files/libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
 <link href="immigration_files/libs/bootstrap/bootstrap-81267100e462c21b3d6c0d5bf76a3417.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
 
 </head>
 
@@ -70,7 +99,10 @@ ul.task-list li input[type="checkbox"] {
 </header>
 
 
-<p>Immigration is a highly contentious topic in American politics and is a key issue for many polititians. Using data from Enos which examines Boston commuters, some of whom were exposed to Spanish speakers on a train platform, we will attempt to answer the question “What is the average causal effect of exposure to Spanish-speakers on attitudes toward immigration?”</p>
+<p><span class="math display">\[
+g(\mathbb{E}[Y \mid \mathbf{X}]) = \beta_0 + \beta_1 X_1 + \beta_2 X_2 + \cdots + \beta_p X_p
+\]</span></p>
+<p>Immigration is a highly contentious topic in American politics and is a key issue for many polititians. Using data from Enos which examines Boston commuters, some of whom were exposed to Spanish speakers on a train platform, we will attempt to answer the question “What is the average causal effect of exposure to Spanish-speakers on attitudes toward immigration?” One potential weakness in this approach is that the assumption of representativeness may not hold.</p>
 
 </main>
 <!-- /main column -->
