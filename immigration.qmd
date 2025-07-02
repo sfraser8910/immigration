@@ -2,5 +2,14 @@
 title: "Immigration"
 format: html
 author: "Surya Fraser"
+execute: 
+  echo: false
 ---
 
+```{r}
+#| message: false
+library(tidyverse) 
+library(primer.data)
+```
+
+Immigration is a highly contentious topic in American politics and is a key issue for many polititians. Using data from Enos which examines Boston commuters, some of whom were exposed to Spanish speakers on a train platform, we will attempt to answer the question "What is the average causal effect of exposure to Spanish-speakers on attitudes toward immigration?"
