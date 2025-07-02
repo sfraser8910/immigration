@@ -12,6 +12,7 @@ library(tidyverse)
 library(primer.data)
 library(tidymodels)
 library(broom)
+library(marginaleffects)
 ```
 
 $$
@@ -63,4 +64,38 @@ fit_att_tidy |>
   )
 ```
 
-Immigration is a highly contentious topic in American politics and is a key issue for many polititians. Using data from Enos which examines Boston commuters, some of whom were exposed to Spanish speakers on a train platform, we will attempt to answer the question "What is the average causal effect of exposure to Spanish-speakers on attitudes toward immigration?" One potential weakness in this approach is that the assumption of representativeness may not hold. I model the relationship between exposure to Spanish speakers and attitude towrds immigration, an integer between 3 and 15, with a linear model.
+```{r}
+library(ggplot2)
+library(dplyr)
+
+# Manually create the summary output as a tibble
+avg_effect <- tibble(
+  comparison = "Treated vs. Control",
+  estimate = 1.55,
+  std_error = 0.521,
+  conf_low = 0.525,
+  conf_high = 2.57
+)
+
+# Plot
+ggplot(avg_effect, aes(x = comparison, y = estimate)) +
+  geom_point(size = 4, color = "#2C3E50") +
+  geom_errorbar(aes(ymin = conf_low, ymax = conf_high), width = 0.1, color = "#1ABC9C", linewidth = 1.2) +
+  labs(
+    title = "Effect of Exposure to Spanish Speakers on Attitude towards Immigration",
+    subtitle = "Participants in the treatment group showed a significantly higher attitude score\ncompared to the control group (estimated increase = 1.55)",
+    x = "",
+    y = "Estimated Difference in att_end (Treated - Control)",
+    caption = "Source: Enos Data"
+  ) +
+  theme_minimal(base_size = 14) +
+  theme(
+    plot.title = element_text(face = "bold"),
+    plot.subtitle = element_text(margin = margin(b = 10)),
+    axis.text.x = element_text(face = "bold"),
+    panel.grid.major.x = element_blank()
+  )
+
+```
+
+Immigration is a highly contentious topic in American politics and is a key issue for many polititians. Using data from Enos which examines Boston commuters, some of whom were exposed to Spanish speakers on a train platform, we will attempt to answer the question "What is the average causal effect of exposure to Spanish-speakers on attitudes toward immigration?" One potential weakness in this approach is that the assumption of representativeness may not hold. I model the relationship between exposure to Spanish speakers and attitude towrds immigration, an integer between 3 and 15, with a linear model. The estimated causal effect was 1.55 with a 95% confidence interval between 0.51 and 2.88.
